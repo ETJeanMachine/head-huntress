@@ -1,0 +1,5 @@
+# Configuration yaml file for personal information – this is utilised by the
+# job searching engine to rank jobs if they are a quality fit or not based
+# on past experience. In practices; this should be remarkably similar to
+# what you'd put in your resume – but should be vastly more detailed, as it
+# allows for better rewriting of the resume by the LLM for individual positions.
