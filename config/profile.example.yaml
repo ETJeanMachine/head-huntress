@@ -3,3 +3,32 @@
 # on past experience. In practices; this should be remarkably similar to
 # what you'd put in your resume – but should be vastly more detailed, as it
 # allows for better rewriting of the resume by the LLM for individual positions.
+personal:
+  name: "John Doe"
+  email: "john.doe@example.com"
+  phone: "+1 555-555-5555"
+  location: "New York, NY"
+
+links:
+  github: "https://github.com/johndoe"
+  linkedin: "https://linkedin.com/in/johndoe"
+
+experience:
+  - company: "Company Name"
+    position: "Position Title"
+    start_date: "YYYY-MM"
+    end_date: "YYYY-MM"
+    bullets:
+      - description: "A description of a particular project or task you completed at the company."
+      - tags: ["tag1", "tag2"] # These should various skills that directly relate to the text description.
+
+education:
+  - institution: "University Name"
+    degree: "Degree Title"
+    start_date: "YYYY-MM"
+    end_date: "YYYY-MM"
+
+projects:
+  - name: "Project Name"
+    description: "A description of the project."
+    tags: ["tag1", "tag2"] # These should various skills that directly relate to the text description.
