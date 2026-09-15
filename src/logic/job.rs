@@ -1,4 +1,7 @@
+//! Job ingestion snapshots and normalized job listings.
+
 use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 /// The source-provided identifier for a listing.
@@ -133,7 +136,8 @@ impl Job {
 }
 
 /// Describes where the work is expected to be performed.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
+#[serde(rename_all = "snake_case")]
 pub enum RemotePolicy {
     /// The position is expected to be performed at a workplace.
     OnSite,
@@ -144,7 +148,8 @@ pub enum RemotePolicy {
 }
 
 /// Describes the employment arrangement for a job.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
+#[serde(rename_all = "snake_case")]
 pub enum EmploymentType {
     /// A standard full-time position.
     FullTime,
@@ -161,7 +166,7 @@ pub enum EmploymentType {
 }
 
 /// Represents the compensation advertised for a job.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Deserialize, Serialize)]
 pub struct Compensation {
     /// The lower end of the advertised range, if provided.
     pub minimum: Option<u64>,
@@ -191,7 +196,8 @@ impl Compensation {
 }
 
 /// Describes the period associated with a compensation amount.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Deserialize, Serialize)]
+#[serde(rename_all = "snake_case")]
 pub enum CompensationPeriod {
     /// Compensation is stated per hour.
     Hourly,
