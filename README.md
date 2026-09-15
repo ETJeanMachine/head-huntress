@@ -2,6 +2,6 @@
 
 **🚧 UNDER CONSTRUCTION 🚧**
 
-A custom job-hunting CLI app (with a planned WebUI).
+A custom job-hunting CLI app (with a planned GUI).
 
 
