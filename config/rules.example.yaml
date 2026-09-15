@@ -1,0 +1,49 @@
+# Deterministic constraints are evaluated locally before semantic scoring.
+hard_constraints:
+  allowed_remote_policies:
+    - remote
+    - hybrid
+  allowed_employment_types:
+    - full_time
+  required_keywords:
+    - backend
+  excluded_keywords:
+    - clearance
+    - unpaid
+
+# Free-form preferences are included in the LLM semantic-evaluation prompt.
+semantic_prompt: |
+  I am looking for backend or platform engineering roles where I can own
+  meaningful systems work. Prefer teams that value pragmatic engineering,
+  technical mentorship, and clear product impact. Avoid roles that are mostly
+  frontend work, support, or maintenance without meaningful ownership.
+
+# Structured criteria make the semantic result scoreable and auditable.
+#
+# `weight` is relative importance, not a percentage by itself. The evaluator
+# normalizes all non-negative weights into a 0-100 score. For example, with
+# these rules the total weight is 80, so the 35-point backend rule represents
+# 43.75% of the semantic score.
+#
+# `minimum_confidence` is the model confidence required for the result to count.
+# It ranges from 0.0 to 1.0: 0.70 means the model must be at least 70% confident.
+# Below the threshold, the rule becomes `unknown` and the job goes to review
+# instead of being accepted or rejected automatically.
+semantic_rules:
+  - id: backend_or_platform_focus
+    description: The role should primarily involve backend or platform engineering.
+    weight: 35.0
+    minimum_confidence: 0.70
+  - id: meaningful_ownership
+    description: The role should provide meaningful technical ownership.
+    weight: 30.0
+    minimum_confidence: 0.70
+  - id: pragmatic_team
+    description: The team should value pragmatic engineering and mentorship.
+    weight: 15.0
+    minimum_confidence: 0.60
+
+# The final semantic score must meet this 0-100 threshold after all hard
+# constraints pass. A value of 65.0 means a fully known job needs a weighted
+# semantic fit of at least 65%; unknown rules still result in human review.
+minimum_score: 65.0
