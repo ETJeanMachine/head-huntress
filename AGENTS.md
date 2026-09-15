@@ -23,3 +23,14 @@
 
 - Keep explanations concise and proportional to the code being reviewed.
 - For small files, summarize the purpose, key design choices, and important caveats without writing an essay unless the user asks for depth.
+
+## Architecture
+
+- Keep `src/main.rs` as a thin startup entry point. CLI behavior belongs in `src/cli.rs`; future GUI/API startup should remain another interface, not domain logic.
+- `src/logic/` contains domain types and deterministic business rules. `src/application/` coordinates use cases. `src/ports/` defines application-owned interfaces. `src/adapters/` implements external integrations.
+- Do not leak SDK or transport types into `logic` or `application`; adapters translate them into domain types.
+- LLM providers implement `ports::llm::LlmProvider`. Keep prompts, structured assessments, resume-plan validation, and evidence provenance in application/domain code.
+- Hard job constraints are deterministic gates. Semantic LLM assessments are weighted preferences and must retain confidence, explanation, and evidence; uncertain results go to review.
+- Resume generation may reframe verified profile evidence but must not invent claims. Validate LLM-generated plans before rendering `templates/resume.html`.
+- Keep secrets in ignored `.env` files. Track only example configuration such as `config/*.example.yaml`; never hardcode provider keys.
+- Prefer unit tests with fixtures and mock ports. Do not require live scraper or LLM credentials for the default test suite.
