@@ -18,3 +18,8 @@
 - Do not push commits unless the user explicitly requests it.
 - Commits should be small in scope; do not push commits containing unrelated features. Break them up between files as necessary.
 - When rewriting history, preserve unrelated commits and avoid folding separate work into the rewritten commit.
+
+## Explanations and code reviews
+
+- Keep explanations concise and proportional to the code being reviewed.
+- For small files, summarize the purpose, key design choices, and important caveats without writing an essay unless the user asks for depth.
