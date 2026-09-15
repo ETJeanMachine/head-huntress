@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ candidate.name }} — Resume</title>
+  <style>
+    @page {
+      size: Letter;
+      margin: 0.5in;
+    }
+
+    :root {
+      color-scheme: light;
+      --ink: #17202a;
+      --muted: #56616f;
+      --accent: #1f5f8b;
+      --rule: #d9e0e7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #ffffff;
+      font-family: "Inter", "Segoe UI", Arial, sans-serif;
+      font-size: 10pt;
+      line-height: 1.35;
+      orphans: 2;
+      widows: 2;
+    }
+
+    .resume {
+      max-width: 8in;
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 0.1in;
+      margin-bottom: 0.14in;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22pt;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+
+    .headline {
+      color: var(--accent);
+      font-size: 11.5pt;
+      font-weight: 600;
+      margin: 0.04in 0 0.07in;
+    }
+
+    .contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.04in 0.16in;
+      color: var(--muted);
+      font-size: 9pt;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .contact a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    section {
+      margin-bottom: 0.12in;
+    }
+
+    h2 {
+      border-bottom: 1px solid var(--rule);
+      break-after: avoid;
+      color: var(--accent);
+      font-size: 10pt;
+      letter-spacing: 0.12em;
+      margin: 0 0 0.06in;
+      padding-bottom: 0.02in;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      font-size: 11pt;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .summary {
+      font-size: 10pt;
+    }
+
+    .entry {
+      break-inside: avoid;
+      margin-bottom: 0.09in;
+    }
+
+    .entry:last-child {
+      margin-bottom: 0;
+    }
+
+    .entry-heading {
+      align-items: baseline;
+      display: flex;
+      gap: 0.12in;
+      justify-content: space-between;
+    }
+
+    .employer,
+    .institution {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .dates,
+    .location {
+      color: var(--muted);
+      flex-shrink: 0;
+      font-size: 9pt;
+      text-align: right;
+    }
+
+    ul {
+      margin: 0.03in 0 0;
+      padding-left: 0.2in;
+    }
+
+    li {
+      margin-bottom: 0.018in;
+      padding-left: 0.02in;
+    }
+
+    .skills {
+      display: grid;
+      gap: 0.045in 0.18in;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .skill-group {
+      display: flex;
+      gap: 0.06in;
+    }
+
+    .skill-group strong {
+      min-width: 1.05in;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    @media print {
+      .resume {
+        max-width: none;
+      }
+
+      a {
+        color: inherit;
+      }
+    }
+
+    @media screen and (max-width: 680px) {
+      body {
+        padding: 0.25in;
+      }
+
+      .entry-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.02in;
+      }
+
+      .dates,
+      .location {
+        text-align: left;
+      }
+
+      .skills {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!--
+    Head Huntress resume template.
+
+    This template uses Jinja/Minijinja-style placeholders. Keep the markup and
+    CSS editable; the renderer should supply the candidate and job-specific
+    context later.
+
+    Print target: one US Letter page (8.5in x 11in, 0.5in margins => 7.5in x
+    10in of content area). At 10.5pt/1.38 body text that is a budget of
+    roughly 48-52 lines total: keep the summary to 2-3 lines, cap experience
+    at 3-4 entries with 3-4 bullets each, and prefer 4-6 skill rows.
+  -->
+  <main class="resume">
+    <header>
+      <h1>{{ candidate.name }}</h1>
+      {% if candidate.headline %}
+      <p class="headline">{{ candidate.headline }}</p>
+      {% endif %}
+      <div class="contact">
+        {% if candidate.email %}<a href="mailto:{{ candidate.email }}">{{ candidate.email }}</a>{% endif %}
+        {% if candidate.phone %}<span>{{ candidate.phone }}</span>{% endif %}
+        {% if candidate.location %}<span>{{ candidate.location }}</span>{% endif %}
+        {% if candidate.links.github %}<a href="{{ candidate.links.github }}">GitHub</a>{% endif %}
+        {% if candidate.links.linkedin %}<a href="{{ candidate.links.linkedin }}">LinkedIn</a>{% endif %}
+        {% if candidate.website %}<a href="{{ candidate.website }}">Website</a>{% endif %}
+      </div>
+    </header>
+
+    {% if candidate.summary %}
+    <section class="summary">
+      <h2>Profile</h2>
+      <p>{{ candidate.summary }}</p>
+    </section>
+    {% endif %}
+
+    <section>
+      <h2>Experience</h2>
+      {% for experience in experiences %}
+      <article class="entry">
+        <div class="entry-heading">
+          <div>
+            <h3>{{ experience.title }}</h3>
+            <div class="employer">{{ experience.company }}{% if experience.location %} · {{ experience.location }}{% endif %}</div>
+          </div>
+          <div class="dates">{{ experience.start_date }} — {{ experience.end_date | default(value="Present") }}</div>
+        </div>
+        <ul>
+          {% for bullet in experience.bullets %}
+          <li>{{ bullet }}</li>
+          {% endfor %}
+        </ul>
+      </article>
+      {% endfor %}
+    </section>
+
+    {% if skills %}
+    <section>
+      <h2>Skills</h2>
+      <div class="skills">
+        {% for group in skills %}
+        <div class="skill-group">
+          <strong>{{ group.name }}</strong>
+          <span>{{ group.items | join(sep=", ") }}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    {% if education %}
+    <section>
+      <h2>Education</h2>
+      {% for item in education %}
+      <article class="entry">
+        <div class="entry-heading">
+          <div>
+            <h3>{{ item.degree }}</h3>
+            <div class="institution">{{ item.institution }}</div>
+          </div>
+          <div class="dates">{{ item.start_date }} — {{ item.end_date }}</div>
+        </div>
+      </article>
+      {% endfor %}
+    </section>
+    {% endif %}
+
+    {% if projects %}
+    <section>
+      <h2>Projects</h2>
+      {% for project in projects %}
+      <article class="entry">
+        <div class="entry-heading">
+          <h3>{% if project.url %}<a href="{{ project.url }}">{{ project.name }}</a>{% else %}{{ project.name }}{% endif %}</h3>
+          {% if project.tags %}<div class="location">{{ project.tags | join(sep=", ") }}</div>{% endif %}
+        </div>
+        <p>{{ project.description }}</p>
+      </article>
+      {% endfor %}
+    </section>
+    {% endif %}
+  </main>
+</body>
+</html>
