@@ -1,4 +1,3 @@
-#[tokio::main]
-async fn main() {
-    println!("Hello, world!");
+fn main() -> std::io::Result<()> {
+    head_huntress::cli::run()
 }
