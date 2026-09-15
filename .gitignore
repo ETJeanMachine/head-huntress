@@ -1,4 +1,7 @@
 /target
 .DS_Store
+.env
+.env.*
+!.env.example
 config/*.yaml
 !config/*example.yaml
