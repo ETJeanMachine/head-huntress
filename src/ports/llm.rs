@@ -1,7 +1,6 @@
 //! Interfaces for language-model providers.
 
 use crate::logic::resume::ResumePlan;
-use crate::logic::rules::SemanticAssessment;
 use std::error::Error;
 use std::fmt;
 use std::future::Future;
@@ -10,14 +9,12 @@ use std::pin::Pin;
 /// A boxed future returned by an [`LlmProvider`].
 pub type LlmFuture<'a, T> = Pin<Box<dyn Future<Output = T> + Send + 'a>>;
 
-/// Provider-independent interface for semantic job assessment.
+/// Provider-independent interface for language-model text generation.
+///
+/// Semantic job assessment is intentionally not part of this port; it is
+/// owned by [`crate::ports::assessment::SemanticAssessor`], which is
+/// implemented by judgment providers such as TypeSafe's Jev by default.
 pub trait LlmProvider: Send + Sync {
-    /// Assesses a job prompt and returns structured semantic assessments.
-    fn assess_job<'a>(
-        &'a self,
-        prompt: &'a str,
-    ) -> LlmFuture<'a, Result<Vec<SemanticAssessment>, LlmError>>;
-
     /// Generates a structured, evidence-backed resume plan.
     fn generate_resume_plan<'a>(
         &'a self,
@@ -32,7 +29,7 @@ pub enum LlmError {
     Configuration(String),
     /// The provider request failed before a usable response was received.
     Transport(String),
-    /// The provider returned content that could not be decoded as assessments.
+    /// The provider returned content that could not be decoded as a plan.
     InvalidResponse(String),
     /// The provider returned an application-level error.
     Provider(String),

@@ -1,5 +1,7 @@
 //! Integrations with external services and infrastructure.
 
+/// Semantic-assessment integrations.
+pub mod assessment;
 /// Job-source integrations.
 #[path = "job-sources/mod.rs"]
 pub mod job_sources;
