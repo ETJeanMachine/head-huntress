@@ -88,11 +88,13 @@ Suggested order: 1 → 2 → 3 → 4; section 5 is independent and can slot in a
 ## Deferred / non-MVP
 
 - `serve` command (future GUI/WebUI shell — port already split for this).
+  - Note: likely will either be a web app or a local tauri application.
 - Glassdoor adapter (`src/adapters/job-sources/glassdoor.rs` is an empty placeholder).
 - Jev evidence-selection question (restore provenance quotes via a second
   Choice question over JD spans).
 - Jev-via-OpenRouter as an explicit assessor option (already works by config —
   `OpenRouterLlm` implements `SemanticAssessor` — just needs the selection knob).
+- OpenAI API implementation; move away from specific OpenRouter code and genercise it to be a portable OpenAI Open API implementation to be shared across multiple different providers
 
 ## Housekeeping
 
