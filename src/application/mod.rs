@@ -1,7 +1,6 @@
 //! Application use cases that coordinate the domain logic.
 
 /// Coordinates rule-based and semantic job evaluation.
-#[path = "evalutator.rs"]
 pub mod evaluator;
 /// Creates conservative, evidence-backed resume plans.
 pub mod generator;
