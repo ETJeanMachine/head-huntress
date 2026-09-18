@@ -98,7 +98,7 @@ Suggested order: 1 → 2 → 3 → 4; section 5 is independent and can slot in a
 
 ## Housekeeping
 
-- [ ] Rename `src/application/evalutator.rs` → `evaluator.rs` (misspelled file,
+- [X] Rename `src/application/evalutator.rs` → `evaluator.rs` (misspelled file,
       currently fixed with `#[path]`).
 - [ ] Delete the empty `glassdoor.rs` placeholder or leave until section 2 expands.
 - [ ] Consider pinning `reqwest` to 0.12 to dedupe with `openrouter-rs`'s copy
